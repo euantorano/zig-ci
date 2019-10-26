@@ -3,9 +3,7 @@ jobs:
   test_simple_latest:
     docker:
       - image: euantorano/zig:latest
-
     working_directory: ~/repo
-
     steps:
       - checkout
       - run:
@@ -21,9 +19,7 @@ jobs:
   test_simple_master:
     docker:
       - image: euantorano/zig:master
-
     working_directory: ~/repo
-
     steps:
       - checkout
       - run:
@@ -36,9 +32,31 @@ jobs:
             zig build test
           working_directory: ~/repo/simple
 
+  test_sdl_latest:
+    machine: true
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: build docker image
+          command: |
+            docker build -t zig-sdl2 ./sdl/
+      - run:
+          name: print zig version
+          command: |
+            docker run zig-sdl2 version
+      - run:
+          name: build app
+          command: |
+            docker run -v ~/repo/sdl:/app zig-sdl2 build
+          working_directory: ~/repo/sdl
+      
+
+
 workflows:
   version: 2
   commit:
     jobs:
       - test_simple_latest
       - test_simple_master
+      - test_sdl_latest

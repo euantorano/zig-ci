@@ -6,3 +6,7 @@ This repository contains two projects:
 
 - `simple` - a simple project that is automatically created by `zig init-lib` - this project includes a basic test that should be tested by the CI services.
 - `sdl` - a slightly more involved project that makes use of SDL 2 to create a "hello world" window - this project should simply be built by the CI services.
+
+## Status
+
+- [![CircleCI](https://circleci.com/gh/euantorano/zig-ci.svg?style=svg)](https://circleci.com/gh/euantorano/zig-ci)
