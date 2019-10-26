@@ -1,0 +1,44 @@
+version: 2.1
+jobs:
+  test_simple_latest:
+    docker:
+      - image: euantorano/zig:latest
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - run:
+          name: print zig version
+          command: |
+            zig version
+      - run:
+          name: run tests
+          command: |
+            zig build test
+          working_directory: ~/repo/simple
+
+  test_simple_master:
+    docker:
+      - image: euantorano/zig:master
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - run:
+          name: print zig version
+          command: |
+            zig version
+      - run:
+          name: run tests
+          command: |
+            zig build test
+          working_directory: ~/repo/simple
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - test_simple_latest
+      - test_simple_master
